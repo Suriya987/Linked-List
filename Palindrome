@@ -1,0 +1,80 @@
+
+234. Palindrome Linked List
+
+Example 1:
+
+Input: head = [1,2,2,1]
+Output: true
+
+Example 2:
+Input: head = [1,2]
+Output: false
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 10^5].
+0 <= Node.val <= 9
+
+
+Approach:
+
+  We can do it in the like adding the whole list into a single digit variable and then we can remove the last using % operator and then we can check it will work.
+But look at the constarints . The range will be in the 10^5 so we can't have that large variable to store the values..
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+     
+    bool isPalindrome(ListNode* head) {
+        //initialising the head node to temp for traversing
+           ListNode* fast=head;
+           ListNode *slow = head;
+
+           while(fast!= NULL && fast->next!= NULL)
+           {
+               fast=fast->next->next;
+               slow = slow->next;
+           } 
+           //if incase still the values are left we need to move slow to mid
+           if(fast!=NULL)
+           {
+               slow=slow->next;
+           } 
+           //reverse the slow
+            ListNode* prev=NULL;
+            ListNode* front = NULL;
+
+            while(slow!=NULL && slow->next!=NULL)
+            {
+                front=slow->next;
+                slow->next=prev;
+                prev=slow;
+                slow=front;
+            }
+            if(slow!=NULL)
+            {
+                slow->next=prev;
+            }
+            fast=head;
+
+            // now compare both the lists
+            while(slow && fast){
+                if(slow->val!=fast->val)
+                 return false;
+
+            slow=slow->next;
+            fast=fast->next;
+            }
+            return true;
+    }
+};
