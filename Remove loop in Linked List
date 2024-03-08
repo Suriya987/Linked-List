@@ -1,0 +1,59 @@
+Source: GFG
+
+Time complexity 
+O(N)
+Space complexity
+O(1) 
+
+class Solution
+{
+    public:
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+          // edge case
+        if(!head) return;  
+        //Check whether it is in loop or not
+        
+             Node* slow=head;
+             Node* fast = head->next;
+             
+             //fast will moves ahead of slow
+             
+             while(fast!=slow)
+             {
+                 //current node is null or next node is null no loop is present and we stop it. 
+                 if(!fast || !fast->next)
+                   return;
+               slow=slow->next;
+               fast=fast->next->next;
+               
+               
+             }
+             
+             int count=1;
+             fast=fast->next;
+             while(fast!=slow)
+             {
+                 count++;
+                 fast=fast->next;
+             }
+             
+             //fix the one pointer to the head and one pointer to the kth node
+             slow=head;
+             fast=head;
+             
+             for(int i=0;i<count-1;i++)
+             {
+                 fast=fast->next;
+             }
+         
+             int check=0;
+             while(fast->next!=slow)
+             {
+                 slow=slow->next;
+                  fast=fast->next;
+             }
+             fast->next=NULL;
+   }
+}
