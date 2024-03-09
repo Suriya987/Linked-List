@@ -1,0 +1,86 @@
+Given a singly linked list of N nodes.
+The task is to find the middle of the linked list. For example, if the linked list is
+1-> 2->3->4->5, then the middle node of the list is 3.
+If there are two middle nodes(in case, when N is even), print the second middle element.
+For example, if the linked list given is 1->2->3->4->5->6, then the middle node of the list is 4.
+
+Input:
+LinkedList: 1->2->3->4->5
+Output: 3 
+Explanation: 
+Middle of linked list is 3.
+
+Time Complexity : O(N)
+Space Complexity : O(1)
+
+class Solution{
+    public:
+    /* Should return data of middle node. If linked list is empty, then  -1*/
+    int getMiddle(Node *head)
+    {
+        //edge case 
+        if(!head) return 0;
+        
+       // find the len of the list 
+       // var = div the len 
+       // if the list len is odd return the var index other wise return the +1 element
+       
+       Node* temp=head;
+       int len=0;
+       
+       //calculating the len of the list
+       while(temp){
+           len++;
+           temp=temp->next;
+       }
+       
+       int div=len/2;
+       
+       //checking the len is odd or even
+       if(len%2==0)  div=div+1;  
+       else div+=1;  //it is odd value we got it is (2.5) but we know it is 3 is mid
+                              //thats why we convert it in (+1)
+       temp=head;  // reinitialise the head node node to the temp
+       int  traverse=0;
+       while(temp)
+       {
+           traverse++;
+            if(traverse==div)
+            {
+                 return temp->data;
+            }
+            temp=temp->next;
+            
+       }   
+    }
+};
+
+Optimization:
+
+Approach : Two pointer moving  i) slow 1 step and moving ii)  fast 2 step 
+    Whent the time fast reaches null we return the slow->data that is the middle node
+
+Time Complexity:
+  O(N)
+Space Complexity : O(1)
+
+class Solution{
+    public:
+    /* Should return data of middle node. If linked list is empty, then  -1*/
+    int getMiddle(Node *head)
+    {
+        if(!head) return -1;
+
+        Node* slow=head;
+        Node* fast=head;
+        
+        //moving the slow pointer in 1 step and fast in 2 step
+        
+         while(fast != NULL && fast->next!=NULL)
+         {
+             slow=slow->next;
+             fast=fast->next->next;
+         }
+         return slow->data;
+    }
+};
