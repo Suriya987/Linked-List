@@ -1,5 +1,42 @@
 Source: GFG
 
+
+BRUTE FORCE
+
+Time Complexity : O(N)   -> for running loop for size  N 
+Spacxe Complexity : O(N)  -> using hashmap
+struct Node
+{
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+class Solution
+{
+    public:
+    //Function to check if the linked list has a loop.
+    bool detectLoop(Node* head)
+    {
+        if(head == NULL){
+            return head;
+        }
+        map<Node*,bool>visited;
+        Node* temp = head;
+        while(temp!=0){
+            if(visited[temp]==true){
+                return true;
+            }
+            visited[temp]=true;
+            temp = temp ->next;
+        }
+        return false;
+    }
+};
+
+OPTIMIZATION
+
 Time Complexity:  O(N) 
 Space Complexity : O(1)
 
