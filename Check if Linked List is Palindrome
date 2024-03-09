@@ -1,0 +1,47 @@
+Given a singly linked list of size N of integers. The task is to check if the given linked list is palindrome or not.
+
+Input:
+N = 3
+value[] = {1,2,1}
+Output: 1
+
+Brute Force:
+
+Time complexity : O(N)
+Space Complexity : O(N) -> stack space
+
+class Solution{
+  public:
+    //Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head)
+    {
+        //traverse each node and store it in the Stack
+        //using 2 pointer we will find .
+        
+            // vector<int>node;
+            
+         stack<int> node;  
+        
+        Node*temp=head;
+        
+        //pushing the elements into the vector
+        while(temp){
+            node.push(temp->data);
+            temp=temp->next;
+        }
+       
+       temp=head;
+       
+        while(temp)
+        {
+          int val= node.top();
+          node.pop();
+          
+          if(temp->data != val)
+            return false;
+            
+            temp=temp->next;
+        }
+        return true;
+    }
+};
