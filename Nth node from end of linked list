@@ -1,0 +1,74 @@
+Source : GFG
+
+Brute Force
+
+Time Complexity : O(2N)    ~O(N) apprx
+Space Complexity : O(1) 
+
+class Solution{
+public:
+    int getNthFromLast(Node *head, int n)
+    {
+          //find the length of the Linked List by using the int variable
+          //run a loop and find the Nth value or Node
+          
+          Node* Temp=head;   // i created a copy of the original list
+          
+          //find the length
+          int LenOfList=0;
+          
+          while(Temp!=NULL)
+          {
+              LenOfList++;
+              Temp=Temp->next;
+          }
+          
+          //find the value which is in Nth Node
+          
+          int ResNode=LenOfList-n+1;
+          if(n>LenOfList)  return -1;
+          
+          Node* temp1=head;
+          for(int i=1;i<=(ResNode);i++)
+          {
+              if(i==ResNode)
+                return temp1->data;
+                
+            temp1=temp1->next;
+                
+          }
+    }
+};
+
+
+Optimization:
+
+Time Complexity : O(N)  
+Space Complexity : O(1)
+
+class Solution{
+public:
+    int getNthFromLast(Node *head, int n)
+    {
+        
+        Node* First=head;
+        Node* Second = head;
+        
+        while(n!=0){
+             if( First==NULL) 
+                 return -1;
+            First=First->next;
+            n--;
+        }
+       
+        
+        while(First!=NULL){
+            Second=Second->next;
+            First=First->next;
+        }
+        if(Second!=NULL)
+        return Second->data;
+        else
+          return -1;
+    }
+};
