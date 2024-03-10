@@ -1,0 +1,37 @@
+Input:
+LinkedList: 2->2->4->5
+Output: 2 4 5
+Explanation: In the given linked list 
+2 ->2 -> 4-> 5, only 2 occurs more 
+than 1 time. So we need to remove it once.
+
+
+Better approach
+
+Time Complexity: O(N)
+Space Complexoty :O(1)
+
+//Function to remove duplicates from sorted linked list.
+Node *removeDuplicates(Node *head)
+{
+  
+   Node*curr=head;
+   Node*prev=curr;
+  
+   if(curr==NULL) {
+       return head;
+   }
+   while(curr!=NULL){
+        
+        if(prev->data!=curr->data){
+           prev->next=curr;
+           prev=prev->next;
+        }
+      curr=curr->next;
+   }
+
+     //Assigning NULL to the end 
+      prev->next=NULL;
+     
+   return head;
+}
