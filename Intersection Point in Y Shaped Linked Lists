@@ -1,0 +1,79 @@
+Source : GFG
+
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+
+
+Time Complexity : O(N+M)
+Space Complexity : O(1)
+
+
+int findLength(Node* head)
+ {
+      int Count=0;
+    Node* h1=head;
+    while(h1){
+         Count++;
+        h1=h1->next;
+    }
+    return Count;
+ } 
+ 
+ Node* reduceList(Node* head,int Count)
+ {
+  
+      while(Count){
+            head=head->next;
+            Count--;
+        }
+        return head;
+ }
+ 
+//Function to find intersection point in Y shaped Linked Lists.
+int intersectPoint(Node* head1, Node* head2)
+{
+     // count the length of the both lists
+    // check which list is lengthier
+     // traverse the node which is higher in length and same time check the lengths are
+        // equal
+    //after both lists are equal compare both list whether they have same data
+    //if we find it out then that is our res we looking for.
+    
+    //find the length of head1
+    Node* h1=head1;
+        int h1_Count=findLength(h1);
+    
+    
+    //find the length of head2
+    Node* h2=head2;
+     int h2_Count=findLength(h2);
+    
+    //restart the list
+    h1=head1;
+    h2=head2;
+    
+   // comparing the both list
+    if(h1_Count > h2_Count)
+    {
+        int sub=h1_Count-h2_Count;
+         h1=reduceList(h1,sub);
+    }
+    else
+    {
+         int sub1=h2_Count-h1_Count;
+        h2=reduceList(h2,sub1);
+    }
+ 
+    //look for intersection
+    
+    while(h1){
+        if(h1 == h2){
+            return h1->data;
+        }
+        h1=h1->next;
+        h2=h2->next;
+    }
+    return -1;
+}
