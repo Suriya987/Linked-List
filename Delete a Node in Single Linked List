@@ -1,0 +1,36 @@
+Source : GFG
+
+Time Complexity: O(N)
+Space Complexity : O(1)
+
+Node* deleteNode(Node *head,int x)
+{
+
+      Node* curr=head;
+
+//if the head is NULL return NULL
+  if(!head) return NULL;
+
+      //edge case if the required node is in the first position
+      if(x==1){
+       curr=curr->next;
+       return curr;
+      }
+      
+
+      
+      Node* prev1;
+      int pos=1;
+      while(curr!=NULL)
+      {
+         if(pos==x)
+         {
+           Node* newnode=curr->next;
+           prev1->next=newnode;
+         }
+         pos++;
+         prev1=curr;
+         curr=curr->next;
+      }
+      return head;
+}
