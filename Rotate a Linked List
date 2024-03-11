@@ -55,3 +55,53 @@ class Solution
         return head;  
     }
 };
+
+
+Optimization:
+.
+Time Complexity : O(N)
+Space Complexity : O(1)
+
+
+class Solution
+{
+    public:
+    //Function to rotate a linked list.
+    Node* rotate(Node* head, int k)
+    {
+        
+        /* 
+           1.going to separate a list into 2 halfs based on the K elements
+           2. Join the two halfs front and back
+         
+        */
+        
+        Node* h1=head;
+        Node* prev;
+
+        
+        while( k-- && h1!=NULL )  //K is larger than n size of list so return head
+        {
+            prev=h1;
+            h1=h1->next;
+        }                          
+        if(h1==NULL)  return head;    // no way to look for hew head becoz k is bigger than n
+        
+        Node* h2=h1; //assigning the new head to h2
+        
+        prev->next=NULL;   //  - -> this is the end of our linked list
+        
+        Node* temp=h2;  // -> if i move the h2 then which pointer do i return to the func.
+                        //.thats why i am creating a new copy like temp
+                        
+        for( ; temp->next != NULL ; temp=temp->next);
+        
+        //i am going to attach the h1 to end of the temp(which is the main)
+        
+        temp->next=head;
+        
+        return h2;
+        
+          
+    }
+};
