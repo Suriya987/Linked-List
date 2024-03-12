@@ -1,0 +1,20 @@
+Source : GFG
+
+Time Complexity : O(1)
+Space Complexity : O(1)
+
+
+class Solution
+{
+    public:
+    //Function to delete a node without any reference to head pointer.
+    void deleteNode(Node *del)
+    {
+        // moving the next node data to del node and as well as address to the next part
+        
+        Node* temp=del->next;
+        del->data=temp->data;
+        del->next=temp->next;
+    }
+
+};
