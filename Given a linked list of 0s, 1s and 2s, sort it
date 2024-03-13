@@ -1,0 +1,121 @@
+Source : GFG
+
+Time Complexity : O(N)
+Space Complexity : O(1)
+
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+         
+         if(head->next == NULL || head==NULL )  return head;
+         
+         //creating three dummy nodes
+         Node* zeroD = new Node(0);
+         Node* oneD = new Node(0);
+         Node* twoD = new Node(0);
+         
+         //initiating current pointers of three lists
+         Node* zero = zeroD;
+         Node* one = oneD;
+         Node* two = twoD;
+         
+         //traversing the list with a pointer
+         Node* curr=head;
+         
+         while(curr)
+         {
+               if(curr->data == 0)
+               {
+                   zero->next=curr;
+                   zero=zero->next;
+                   curr=curr->next;
+               }
+               else if(curr->data == 1)
+               {
+                   one->next=curr;
+                   one=one->next;
+                   curr=curr->next;
+               }
+               else
+               {
+                   two->next=curr;
+                   two=two->next;
+                   curr=curr->next;
+               }
+         }
+         //attaching the three lists into the single list
+           //checking if the 1 data node is present or not it is not it will add 2 node
+         zero->next=(oneD->next)?(oneD->next):(twoD->next);
+         one->next=twoD->next;
+         two->next=NULL; // last node is must points to null
+         
+         //updating the head of the list
+         head=zeroD->next;
+         
+         //deleting dummy nodes
+         delete zeroD;
+         delete oneD;
+         delete twoD;
+         
+         return head;
+         
+        //   Node* zeroHead=head;
+        //   Node* newHead=zeroHead;
+        //   Node* temp1=newHead;
+        //   Node* oneHead=head;
+        //   Node* temp2 = oneHead;
+        //   Node* twoHead = head;
+        //   Node* temp3= twoHead;
+          
+        //   if(head->data == 0)
+        //   {
+        //       temp1->next=head;
+        //       temp1=temp1->next;
+        //   }
+        //   else if(head->data == 1)
+        //   {
+        //       temp2->next=head;
+        //       temp2=temp2->next;
+        //   }
+        //     else 
+        //   {
+        //       temp3->next=head;
+        //       temp3=temp3->next;
+        //   }
+          
+        //   Node* prev=head;
+        //   Node* traverse=head->next;
+          
+        //   while(traverse)
+        //   {
+        //       if(traverse->data == 0)
+        //       {
+        //           temp1->next=prev->next;
+        //           temp1=temp1->next;
+        //       }
+        //       else if(traverse->data == 1)
+        //       {
+        //           temp2->next=prev->next;
+        //           temp2=temp2->next;
+        //       }
+        //       else
+        //       {
+        //           temp3->next=prev->next;
+        //           temp3=temp3->next;
+        //       }
+        //       traverse=traverse->next;
+        //   }
+          
+        //   newHead=zeroHead->next;
+        //   temp1->next= oneHead->next;
+        //   temp2->next=twoHead->next;
+        //   temp3->next=NULL;
+          
+        //   return newHead;
+          
+          
+        
+    }
+};
