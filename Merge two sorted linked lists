@@ -1,0 +1,62 @@
+Source : GFG
+
+Given two sorted linked lists consisting of N and M nodes respectively. The task is to merge both of the list (in-place) and return head of the merged list.
+
+Input:
+N = 4, M = 3 
+valueN[] = {5,10,15,40}
+valueM[] = {2,3,20}
+Output: 2 3 5 10 15 20 40
+Explanation: After merging the two linked
+lists, we have merged list as 2, 3, 5,
+10, 15, 20, 40.
+
+
+Time Complexity : O(N+M)
+Space Complexity : O(N+M)
+
+//Function to merge two sorted linked list.
+Node* sortedMerge(Node* head1, Node* head2)  
+{  
+      //creating a new node and initiates it to 0 
+      Node* nhead=new Node(0);
+      Node* temp1=head1;
+      Node* temp2=head2;
+      Node* temp3=nhead;
+      
+      while(temp1 && temp2)
+      {
+          if(temp1->data < temp2->data)
+          {
+              temp3->next=temp1;
+              temp3=temp3->next;
+              temp1=temp1->next;
+          }
+          else
+          {
+              temp3->next=temp2;
+              temp2=temp2->next;
+              temp3=temp3->next;
+          }
+          
+      }
+      
+      while(temp1)
+      {
+          temp3->next=temp1;
+          temp1=temp1->next;
+          temp3=temp3->next;
+      }
+      
+      while(temp2)
+      {
+          temp3->next=temp2;
+          temp3=temp3->next;
+          temp2=temp2->next;
+      }
+      
+      nhead=nhead->next;
+      
+      return nhead;
+      
+}  
