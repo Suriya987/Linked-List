@@ -1,0 +1,46 @@
+Given a linked list of size N. The task is to complete the function countNodesinLoop() that checks whether a given Linked List 
+contains a loop or not and if the loop is present then return the count of nodes in a loop or else return 0. 
+C is the position of the node to which the last node is connected. If it is 0 then no loop.
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(1)
+
+
+Source: GFG
+
+
+Time Complexity : O(N)
+Space Complexity : O(1)
+
+int countNodesinLoop(struct Node *head)
+{
+   //going to use 2 pointer fast and slow
+     Node* slow=head;
+     Node* fast=head->next;
+     
+     while(slow!=fast && fast)
+     {
+         slow=slow->next;
+         fast=fast->next;
+//checking the next node of fast is NULL then it will become segementation error.
+         if(fast==NULL)
+          break;
+         else   //if the next node of fast is not null then we move fast
+           fast=fast->next;
+     }
+     
+     if(fast==NULL)  return 0;   // if there is no loop fast is eventually NULl so 0.
+    
+    //if there is no loop we do remaining steps to count the loop
+    
+     int loopCount=1;
+     fast=fast->next;
+     while(slow!=fast)
+     {
+         fast=fast->next;
+         loopCount++;
+     }
+     
+     return loopCount;
+     
+}
