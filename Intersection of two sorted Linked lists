@@ -1,0 +1,83 @@
+Source : GFG
+
+Given two linked lists sorted in increasing order, create a new linked list representing the intersection of the two linked lists. The new linked list should be made with without changing the original lists.
+
+Note: The elements of the linked list are not necessarily distinct.
+
+Example 1:
+
+Input:
+LinkedList1 = 1->2->3->4->6
+LinkedList2 = 2->4->6->8
+Output: 2 4 6
+Explanation: For the given two
+linked list, 2, 4 and 6 are the elements
+in the intersection.
+Example 2:
+
+Input:
+LinkedList1 = 10->20->40->50
+LinkedList2 = 15->40
+Output: 40
+Your Task:
+You don't have to take any input of print anything. Your task is to complete the function findIntersection(), 
+which will take head of both of the linked lists as input and should find the intersection of two linked list 
+and add all the elements in intersection to the third linked list and return the head of the third linked list.
+
+Expected Time Complexity : O(n+m)
+Expected Auxilliary Space : O(n+m)
+
+Note: n, m are the size of the respective linked lists.
+
+
+Optimised Approach:
+
+Time Complexity : O(N+M)
+Space Complexity : O(N+M)  -> for storing result list
+
+class Solution
+{
+    public:
+    Node* findIntersection(Node* head1, Node* head2)
+    {
+          //creating a null node for joining the result  list
+          
+          Node* nHead=NULL;
+          Node* t1=head1;
+          Node* t2=head2;
+          Node* tail=nHead;
+          
+          while(t1 && t2)
+          {
+              //if it is equal we join it in the result list
+              if(t1->data == t2->data)
+              {
+                  //creating a new node
+                     if(nHead==NULL){
+                         nHead=tail=new Node(t1->data);
+                     }
+                     else   //already node is present in the result list
+                     {
+                         tail->next=new Node(t1->data);  //creating a new node with data
+                         tail=tail->next;
+                     }
+                     t1=t1->next;
+                     t2=t2->next;
+                //   t3->next=t1;
+                //   t1=t1->next;
+                //   t2=t2->next;
+                //   t3=t3->next;
+              }
+              else if(t1->data < t2->data)   //if any one data is less we need match it
+              {
+                  t1=t1->next;
+              }
+              else
+              {
+                  t2=t2->next;
+              }
+          }
+    //      t3->next=NULL;
+          return nHead;
+    }
+};
