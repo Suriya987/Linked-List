@@ -1,0 +1,97 @@
+Source : GFG
+
+Given two linked list head1 and head2 with distinct elements, determine the count of all distinct pairs from both lists whose sum is equal to the given value x.
+
+Note: A valid pair would be in the form (x, y) where x is from first linked list and y is from second linked list.
+
+Input:
+
+head1 = 1->2->3->4->5->6
+head2 = 11->12->13
+x = 15
+
+Output: 3
+Explanation: There are total 3 pairs whose sum is 15 : (4,11) , (3,12) and (2,13)
+
+
+Approach :   ( Time Limit Exceeded )
+
+   Using Map 
+
+Time Complexity : O(n1*n2)   n1-> linked list  n2-> size of the map
+Space Complexity : O(n2)  
+
+class Solution{
+  public:
+    // your task is to complete this function
+    int countPairs(struct Node* head1, struct Node* head2, int x) {
+            unordered_map<int,int> mp;
+            
+            Node* temp=head1;
+            
+            //storing all the values of the head1 into the map
+            while(temp)
+            {
+                mp[temp->data]++;
+                temp=temp->next;
+            }
+            
+            //checking the values which are equal to the x 
+            //traversing head2 value and checking the every value in the map
+            Node* temp2=head2;
+            int res=0;
+            while(temp2){
+                
+                int val=temp2->data;
+                
+             for (auto i = mp.begin(); i != mp.end(); i++) 
+             {
+                 int val2=i->first;
+                
+                 if(x==val+val2)
+                 {
+                     int val1=i->second;
+                     res+=val1;
+                 }
+                 
+             }
+             temp2=temp2->next;
+             
+            }
+            
+            return res;
+            
+    }
+};
+
+Approach : Using hashSet
+
+Time Complexity: O(N) -> length of the list which we using to find the corresponding value
+Space Complexity : O(N)  -> length of the list which we are stored in the HashSet
+
+class Solution{
+  public:
+  
+    int countPairs(struct Node* head1, struct Node* head2, int x) {
+           
+           unordered_set<int> us;
+           int res=0;
+           
+           while(head1)
+           {
+               us.insert(head1->data);
+               head1=head1->next;
+           }
+           
+           while(head2)
+           {
+               if(us.find(x - head2->data) != us.end())
+               {
+                   res++;
+               }
+               head2=head2->next;
+           }
+            return res;
+            
+    }
+};
