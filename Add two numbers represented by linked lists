@@ -17,6 +17,8 @@ list (4 5) and (3 4 5), after adding
 the two linked list resultant linked
 list will be (3 9 0).
 
+Time Complexity : O(Max(N,M) 
+Space Complexity : O(Max(N,M)  -> for storing results  technically i am not using any extra space 
 
 class Solution
 {
@@ -36,7 +38,7 @@ class Solution
          return prev;
     }
     public:
-    //Function to add two numbers represented by linked list.
+
     struct Node* addTwoLists(struct Node* first, struct Node* second)
     {
           // i need to reverse the both lists 
