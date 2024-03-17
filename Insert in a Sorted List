@@ -1,0 +1,52 @@
+Given a linked list sorted in ascending order and an integer called data, insert data in the linked list such that the list remains sorted.
+
+Input:
+LinkedList: 25->36->47->58->69->80
+data: 19
+Output: 
+19 25 36 47 58 69 80
+Explanation:
+After inserting 19 the sorted linked list will look like the one in the output.
+
+
+Time Complexity : O(N)
+Space Complexity : O(1)
+
+class Solution{
+  public:
+    // Should return head of the modified linked list
+    Node *sortedInsert(struct Node* head, int data) {
+          
+          Node* temp=head;
+          Node* prev=temp;
+          Node* newNode = new Node(data);
+        
+          if(head->data > data)
+          {
+              newNode->next=head;
+              head=newNode;
+              return head;
+          }
+          temp=temp->next;
+        
+          while(temp)
+          {                          
+            if(temp->data > data )
+            {
+             
+                prev->next=newNode;
+              
+                newNode->next=temp;
+              
+                return head;
+            }
+            temp=temp->next;
+            prev=prev->next;
+          }
+          
+              prev->next=newNode;
+              newNode->next=NULL;
+       
+          return head;
+    }
+};
