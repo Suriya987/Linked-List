@@ -1,0 +1,101 @@
+Given a linked list of size N. The task is to reverse every k nodes (where k is an input to the function) in the linked list.
+If the number of nodes is not a multiple of k then left-out nodes, in the end, 
+should be considered as a group and must be reversed (See Example 2 for clarification).
+
+Input:
+LinkedList: 1->2->2->4->5->6->7->8
+K = 4
+Output: 4 2 2 1 8 7 6 5 
+Explanation: 
+The first 4 elements 1,2,2,4 are reversed first 
+and then the next 4 elements 5,6,7,8. Hence, the 
+resultant linked list is 4->2->2->1->8->7->6->5.
+
+Time Complexity: O(2N) The time complexity consists of actions of reversing segments of K and finding the Kth node which operates in linear time. 
+                Thus, O(N) + O(N) = O(2N), which simplifies to O(N).
+
+Space Complexity: O(1) The space complexity is O(1) as the algorithm operates in place without any additional space requirements.
+
+class Solution
+{
+    struct node* reverse(struct node* head1)
+    {
+        struct  node* prev=NULL;
+        struct node* temp=head1;
+        while(temp!=NULL)
+        {
+            struct node* next = temp->next;
+            temp -> next = prev;
+            prev = temp;
+            temp = next; 
+        }
+        
+        return prev;
+    }
+    
+    struct node* findKthNode(struct node* head2 , int K)
+    {
+        K-=1;
+        
+        while(head2!=NULL && K>0)
+        {
+            head2 = head2 -> next;
+            K--;
+        }
+        return head2;
+    }
+    public:
+    struct node *reverseIt (struct node *head, int k)
+    { 
+           struct node* temp=head;
+           struct node* prevLast=NULL;
+           //I need to traverse it till the end of the list
+           
+           while(temp)
+           {
+               
+               struct  node* KthNode = findKthNode(temp,k);
+               
+               //what if the kthNode is become NULL that means k element is not in the list
+              if(KthNode == NULL )
+              {
+            // if the nodes are still remaining we need to reverse the pending nodes.
+                  if(temp!=NULL)
+                  {
+                      struct node* rem = reverse(temp);
+                      temp=rem;
+                  }
+                  prevLast->next = temp;
+                  //we just updating the temp to the remaining list
+                  break; //nodes are not available here after so break the loop and return
+              }
+               //preserving the following half of the list
+               struct node* nextNode = KthNode->next;
+               
+               KthNode->next=NULL;
+               
+               //reverse the list of size K
+               
+               reverse(temp);
+               
+               //checking for the head node is already assigned or not if not then assign
+               
+               if(temp ==  head)
+               {
+                   head = KthNode;
+               }
+               else
+               {
+                 //if not then simply we connect the list to the prevLast node for merge
+                   prevLast->next=KthNode;
+               }
+               //updating the last node of the half list for linking the remaining list
+               prevLast=temp;
+               
+               //change the temp to nextnode for traversing list
+               temp=nextNode;
+               
+           }
+           return head;
+    }
+};
