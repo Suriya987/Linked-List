@@ -1,0 +1,100 @@
+Source : GFG
+
+A number N is represented in Linked List such that each digit corresponds to a node in linked list. You need to add 1 to it.
+
+Input:
+LinkedList: 4->5->6
+Output: 457
+Explanation: 4->5->6 represents 456 and when 1 is added it becomes 457. 
+
+Time Complexity :  O(N)
+
+O(N) + O(N) + O(N) 
+O(N) -> for reverse the list
+O(N) -> for creating a list which after adds 1 
+O(N) -> for reverse the added and list and then return 
+
+Overall , O(N) 
+
+Space Complexity : O(1) 
+
+but we are using list to store but we dont take  any extra space to solve this problem . 
+
+
+
+class Solution
+{
+    Node* reverse(Node* h1)
+  {
+      Node* prev=NULL;
+      Node* next;
+      while(h1)
+      {
+          next=h1->next;
+          h1->next=prev;
+          
+          prev=h1;
+          
+          h1=next;
+          
+      }
+      return prev;
+  }
+  
+    public:
+    Node* addOne(Node *head) 
+    {
+        Node* temp = head;
+   
+  //reverse the list 
+  
+  Node* newHead=reverse(temp);
+  Node* temp1 = newHead;
+  
+ //return temp1;
+  Node* newList = new Node(0);
+  Node* trv = newList;
+  
+  //int data=temp->data;
+  int carry = 1;
+  int value=0;
+     //why carry is not zero ? becoz if the carry has the value we need a new node
+  while(temp1 || carry > 0 )
+  {
+      if(temp1!=NULL ){
+   value = temp1->data + carry;
+      }
+      else
+      {
+           value = carry;
+      }
+  
+  //i need to add a remainder part to the node->data;
+  carry  = value / 10;
+  int remainder = value % 10;
+  
+  //creating new node in the data of new remainder
+  Node* newNode = new Node(remainder);
+  
+  //connecting the new node to the list
+  trv -> next = newNode;
+  trv=trv->next;
+  //moving the temp1 to the next node for adding new nodes in the upcoming steps
+  if(temp1)
+  temp1=temp1->next;  
+  
+  }
+  
+  //after doing all the tasks we need to reverse the list 
+  
+  //return newList;
+   Node* result = reverse(newList->next);
+  
+  return result;
+    }
+};
+
+   
+  
+  
+  
