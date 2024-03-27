@@ -1,0 +1,56 @@
+Source : GFG
+
+Given a singly linked list, remove all the nodes in the list which have any node on their right whose value is greater.
+(Not just immediate Right , but entire List on the Right)
+
+LinkedList = 12->15->10->11->5->6->2->3
+Output: 15 11 6 3
+Explanation: Since, 12, 10, 5 and 2 are
+the elements which have greater elements
+on the following nodes. So, after deleting
+them, the linked list would like be 15,
+11, 6, 3.
+
+
+class Solution
+{
+   public:
+    Node *compute(Node *head)
+    {
+      //moving the outerloop node if any node is not bigger than the current node 
+        // i will add it in the new list otherwise i skip it
+        
+        Node* outer = head;\
+        Node* inner = head->next;
+        Node* newHead = new Node(0);
+        Node* temp=newHead;
+        while(outer->next)
+        {
+            int data = outer->data;
+            inner=outer->next;
+            int code=1;
+            while(inner)
+            {
+                int data1 = inner->data;
+            
+                if(data<data1)
+                {
+                    code=0;
+                    break;
+                }
+                inner=inner->next;
+            }
+            if(code==1)
+            {
+            Node* new1 = new Node(data);
+              temp->next=new1;
+              temp=temp->next;
+            }
+            outer=outer->next;
+            
+        }
+        temp->next=outer;
+        return newHead->next;
+    }
+    
+};
