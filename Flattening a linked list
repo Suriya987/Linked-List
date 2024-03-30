@@ -1,0 +1,143 @@
+Source : GFG
+
+Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:
+(i) a next pointer to the next node,
+(ii) a bottom pointer to a linked list where this node is head.
+Each of the sub-linked-list is in sorted order.
+Flatten the Link List such that all the nodes appear in a single level while maintaining the sorted order. 
+
+Input:
+5 -> 10 -> 19 -> 28
+|     |     |     | 
+7     20    22   35
+|           |     | 
+8          50    40
+|                 | 
+30               45
+Output:  5-> 7-> 8- > 10 -> 19-> 20->
+22-> 28-> 30-> 35-> 40-> 45-> 50.
+Explanation:
+The resultant linked lists has every 
+node in a single level.
+(Note: | represents the bottom pointer.)
+
+
+Brute force approach :
+
+Time complexity :  O( N x M )  + O(x LOg x)  -> for sorting  
+Space Complexity : O( N x M ) x 2  -- - > for we having 
+
+Node *flatten(Node *root)
+{
+     // traverse every node in the given linked list 
+     //store every element in the array and then sort it 
+     // add new list in the vertical order and then return it
+     
+         Node* head=root;
+         Node* temp = head;
+         vector<int> ele;
+         
+         //traversing the node
+         while(temp)      -- - -- - -- - > this outerloop run for O(N)
+         {
+             //this pointer is to move inside the child of the corrent node
+             Node* t=temp;
+             
+             while(t)     - -- -  > this inner loop will run for O(M) times means depth of the bottom of every node 
+             {  
+                 ele.push_back(t->data);
+                 t=t->bottom;
+             }
+             temp=temp->next;
+         }
+         
+         //after adding all the values to the vector now we need to sort it out.
+         
+         sort(ele.begin(),ele.end());    - -- - > o(N LOG N) 
+         
+         //now we need to add these values to the new list
+         
+         Node* newHead= new Node(ele[0]);
+         
+         Node* t=newHead;
+         
+         int n= ele.size();
+         
+         for(int i=1;i<n;i++)    -> o( N x M )  
+         {
+             Node* nxt=new Node(ele[i]);
+             t->bottom=nxt;
+             t=t->bottom;
+         }
+         
+         t->bottom=NULL;
+         
+         return newHead;
+              
+}
+
+Optimized approach :
+
+Time complexity :  
+     O(N) is the depth of the recursive calls
+     O(M+M)  is for the merge fucntions  ( M is the height of the vertical nodes)
+So overall , O(N) * O(M+M)  = O(N) * O(2M)   ~ O(2NM)   { approximately }
+
+Space complexity :
+     O(N) is the recursive stack space   . we are not using any extraspace for solving the problem
+   
+Node* merge(Node* h1, Node* h2)
+{
+  //  return h1;
+    Node* newList = new Node(0);
+    Node* temp=newList;
+    
+    while(h1 && h2)
+    {
+        if(h1->data < h2->data)
+        {
+            Node* curr = new Node(h1->data);
+            temp->bottom = curr;
+            temp=temp->bottom;  //moving temp to next bottom so that we can able to add
+             h1=h1->bottom;    // new bottom nodes during the process
+        }
+        else
+        {
+            Node* curr1 = new Node(h2->data);
+            temp->bottom = curr1;
+            temp=temp->bottom;
+             h2=h2->bottom;
+        }
+    }
+    
+    //if any values are left in the any list 
+    
+    if(h1)  temp->bottom = h1;
+    else temp->bottom = h2;
+    
+    //assigning NULL to the end of the list
+    
+   newList->bottom->next = NULL;
+    return newList->bottom;
+}
+
+/*  Function which returns the  root of 
+    the flattened linked list. */
+Node *flatten(Node *root)
+{
+     // going to use the recursion and backtracking  method to do this
+     
+     // this means if we are standing on the last node of the list
+     if(root == NULL || root->next==NULL)
+       return root;
+       
+       // i need to traverse till the end of the list and then i do backtracking
+       
+     // Node* returnList = flatten(root->next);
+      
+      Node* mergeHead = merge(flatten(root->next),root);
+      
+      return mergeHead;
+        
+}
+
