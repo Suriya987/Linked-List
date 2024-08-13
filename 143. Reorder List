@@ -1,0 +1,126 @@
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+Approach : two pointer ( befor reverse the second half do )
+Time complexity : O(N)
+Space complexiy : O(1)
+
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+
+        if(head==NULL || head->next==NULL)  return;
+
+               ListNode* slow=head;
+          ListNode* fast=head->next;
+          
+          while(fast && fast->next)
+          {
+              slow=slow->next;
+              fast=fast->next->next;
+          }
+          
+          ListNode* curr=slow->next;
+          slow->next=NULL;
+          ListNode* prev=NULL;
+          
+          
+          while(curr)
+          {
+              ListNode* next=curr->next;
+              curr->next=prev;
+              prev=curr;
+              curr=next;
+          }
+          
+          //1st half = head
+          //2nd half = prev
+          
+          ListNode* first=head;
+          ListNode* temp=head;
+          
+          while(prev)
+          {
+             ListNode* t1=first->next;
+             ListNode* t2=prev->next;
+             
+             temp->next=first;
+             temp=temp->next;
+             temp->next=prev;
+             temp=temp->next;
+             
+             first=t1;
+             prev=t2;
+             
+          }
+
+          if(first)
+             temp->next=first;
+        //   if(prev)
+        //      temp->next=prev;
+        //  return head;
+        // if(head==NULL)  return;
+        // ListNode* slow=head;
+        // ListNode* fast=head->next;
+        //   //odd length  even length
+        //    while(fast!=NULL && fast->next!=NULL)
+        //    {
+        //       slow=slow->next;
+              
+        //       fast=fast->next->next;
+        //    }
+        //    //this above step is used to split the list
+           
+        //    ListNode* curr=slow->next;
+        //    slow->next=NULL;
+        //    ListNode* prev=NULL;
+        //    ListNode* temp=NULL; 
+
+
+
+        //    while(curr!=NULL)
+        //    {
+        //      temp=curr->next;
+        //      curr->next=prev;
+        //      prev=curr;
+        //      curr=temp;
+        //    }
+
+        //    ListNode* newHead=head;
+        //    ListNode* newTemp=head;
+        //    ListNode* h1=newTemp;
+        //    ListNode* left=head;
+        //    ListNode* right=prev;
+
+        //    while(left && right)
+        //    {
+        //        newTemp->next=left;
+        //        newTemp=newTemp->next;
+        //        newTemp->next=right;
+        //        newTemp=newTemp->next;
+
+        //        left=left->next;
+        //        right=right->next;
+        //    }
+
+        //    //if any node is left
+        //    if(left)
+        //     {
+        //         newTemp->next=left; 
+        //         newTemp=newTemp->next;
+        //         left=left->next;
+        //     }
+
+        //     if(right)
+        //     {
+        //         newTemp->next=right;
+        //         newTemp=newTemp->next;
+        //         right=right->next; 
+        //     }
+    }
+};
